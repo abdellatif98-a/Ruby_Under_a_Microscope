@@ -1,6 +1,6 @@
 > what seems complex from a distance is often quite simply when you look closely enough
 
-Ruby is dynamic; using metaprogramming, Beneath this thin veneer of simplicity, Ruby is a very complex tool.
+* Ruby is dynamic; using metaprogramming, Beneath this thin veneer of simplicity, Ruby is a very complex tool.
 
 > you’ll discover that a few important computer science concepts underpin Ruby’s many features, you’ll gain a deeper understanding of what is happening under the hood as you use the language.
 
@@ -8,7 +8,7 @@ Ruby is dynamic; using metaprogramming, Beneath this thin veneer of simplicity, 
 
 > It doesn’t matter how beautiful your theory is, it doesn’t matter how smart you are. If it doesn’t agree with experiment, it’s wrong. —Richard Feynman.
 
-we need to perform experiments to be sure our hypotheses are correct.
+* we need to perform experiments to be sure our hypotheses are correct.
 
 # In Chapter 1: Tokenization and Parsing, you’ll learn how Ruby parses your Ruby program. 
 
@@ -44,10 +44,10 @@ we need to perform experiments to be sure our hypotheses are correct.
 
 * Your code began as a stream of text characters, and Ruby converted it to a stream of tokens words that it will later combine into sentences.
 
-
 * Ripper makes it very easy to see what tokens Ruby creates for different code files. Shipped with Ruby 1.9 and Ruby 2.0, the Ripper class allows you to call the same tokenization and parsing code that Ruby uses to process text from code files.
-```
+
 Example:
+```
 $ ruby lex1.rb
 10.times do |n|
 puts n
@@ -120,7 +120,6 @@ $$ = "I like";
 * the acronym LALR stands for Look-Ahead LR parser, and it16 Chapter 1 describes the algorithm the parser uses to find matching grammar rules. We’ll get to the look ahead part in a minute. For now, let’s start with LR:
 •	 L (left) means the parser moves from left to right while processing the token stream. In this example, that would be le, gusta, el, and ruby, in that order.
 •	 R (reversed rightmost derivation) means the parser takes a bottom-up strategy, using a shift/reduce technique, to find matching grammar rules
-
 
 * This operation is called reduce because the parser is replacing the pair of tokens with a single matching rule. The parser looks through the available rules and reduces, or applies the single matching rule. Now the parser can reduce again because there’s another matching rule: VerbAndObject! The VerbAndObject rule matches because its use of the OR (|) operator matches either the SheLikes or ILike child rules. You can see in Figure 1-20 that the parser replaces SheLikes with VerbAndObject.
 
