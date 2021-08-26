@@ -128,19 +128,20 @@ $$ = "I like";
 * you see a complex series of child rules that also match the entire Ruby script: top statements, a single statement, an expression, an argument, and, finally, a primary value
 
 * you see a complex series of child rules that also match the entire Ruby script:
-                    require 'ripper'
-                    require 'pp'
-                    code = <<STR
-                    10.times do |n|
-                    puts n
-                    end
-                    STR
-                    puts code
-                    pp Ripper.sexp(code)
-
+```
+require 'ripper'
+require 'pp'
+code = <<STR
+10.times do |n|
+puts n
+end
+STR
+puts code
+pp Ripper.sexp(code)
+```
 
 OUTPUT: 
-
+```
 [:program,
  [[:method_add_block,
    [:call,
@@ -152,7 +153,7 @@ OUTPUT:
      [:params, [[:@ident, "n", [2, 13]]], nil, nil, nil, nil, nil, nil],
      false],
     [:bodystmt, [[:void_stmt]], nil, nil, nil]]]]]
-
+```
 
 * As Ruby parses your code, matching one grammar rule after another, it converts the tokens in your code file into a complex internal data structure called an abstract syntax tree (AST). (You can see some of the C code that produces this structure in “Reading a Bison Grammar Rule” on page 22.) The AST is used to record the structure and syntactical meaning of your Ruby code.
 
