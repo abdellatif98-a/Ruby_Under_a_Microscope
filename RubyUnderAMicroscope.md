@@ -123,3 +123,41 @@ $$ = "I like";
 
 * This operation is called reduce because the parser is replacing the pair of tokens with a single matching rule. The parser looks through the available rules and reduces, or applies the single matching rule. Now the parser can reduce again because there’s another matching rule: VerbAndObject! The VerbAndObject rule matches because its use of the OR (|) operator matches either the SheLikes or ILike child rules. You can see in Figure 1-20 that the parser replaces SheLikes with VerbAndObject.
 
+* the parser maintains a state table of possible outcomes depending on what the next token is and which grammar rule was just parsed. In this case, the table would contain a series of states, describing which grammar rules have been parsed so far and which states to move to next depending on the next token. (LALR parsers are complex state machines that match patterns in the token stream. When you use Bison to generate the LALR parser, Bison calculates what this state table should contain based on the grammar rules you provided.)
+
+* you see a complex series of child rules that also match the entire Ruby script: top statements, a single statement, an expression, an argument, and, finally, a primary value
+
+* you see a complex series of child rules that also match the entire Ruby script:
+                    require 'ripper'
+                    require 'pp'
+                    code = <<STR
+                    10.times do |n|
+                    puts n
+                    end
+                    STR
+                    puts code
+                    pp Ripper.sexp(code)
+
+
+OUTPUT: 
+
+[:program,
+ [[:method_add_block,
+   [:call,
+    [:@int, "10", [2, 0]],
+    [:@period, ".", [2, 2]],
+    [:@ident, "times", [2, 3]]],
+   [:do_block,
+    [:block_var,
+     [:params, [[:@ident, "n", [2, 13]]], nil, nil, nil, nil, nil, nil],
+     false],
+    [:bodystmt, [[:void_stmt]], nil, nil, nil]]]]]
+
+
+* As Ruby parses your code, matching one grammar rule after another, it converts the tokens in your code file into a complex internal data structure called an abstract syntax tree (AST). (You can see some of the C code that produces this structure in “Reading a Bison Grammar Rule” on page 22.) The AST is used to record the structure and syntactical meaning of your Ruby code.
+
+* As in Experiment 1-1, when we displayed token information from Ripper, you can see that the source code file line and column information are displayed as integers. For example, [2, 2] u indicates that Ripper found the puts call on line 2 at column 2 of the code file. You can also see that Ripper outputs an array for each of the nodes in the AST—with [:@ident, "puts", [2, 2]] u, for example. Now your Ruby program is beginning to “make sense” to Ruby. Instead of a simple stream of tokens, which could mean anything, Ruby now has a detailed description of what you meant when you wrote puts n. You see a function call (a command), followed by an identifier node that indicates which function to call.
+
+
+* Ruby uses the args_add_block node because you could pass a block to a command/function call like this. Even though you’re not passing a block in this case, the args_add_block node is still saved into the AST. (Notice, too, how the n identifier is recorded as a :var_ref, or variable reference node, not as a simple identifier.)
+

@@ -1,10 +1,11 @@
 require 'ripper'
 require 'pp'
 code = <<STR
-array = []
+# array = []
 10.times do |n|
-array << n if n < 5
+# array << n if n < 5
 end
 STR
 puts code
 pp Ripper.lex(code)
+pp Ripper.sexp(code)
